@@ -1393,6 +1393,12 @@ a:visited {
   background-color: transparent;
 }
 
+.success-message-text {
+  min-height: auto;
+  min-width: auto;
+  background-color: transparent;
+}
+
 .registration-divider {
   display: block;
   width: auto;
