@@ -10,12 +10,12 @@ function sanitize($data) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Submit'])) {
-	$F_Name = sanitize($_POST['F_Name']);
-	$L_Name = sanitize($_POST['L_Name']);
-	$Email = sanitize($_POST['Email']);
-	$PWD = sanitize($_POST['PWD']);
-	$CPWD = sanitize($_POST['cPWD']);
-	$displayname = sanitize($_POST['displayname']);
+	$F_Name = sanitize($_POST['F_Name']) ?? "";
+	$L_Name = sanitize($_POST['L_Name']) ?? "";
+	$Email = sanitize($_POST['Email']) ?? "";
+	$PWD = sanitize($_POST['PWD']) ?? "";
+	$CPWD = sanitize($_POST['cPWD']) ?? "";
+	$displayname = sanitize($_POST['displayname']) ?? "";
 	
 	if($query = $conn->prepare("SELECT * FROM users WHERE displayname = ?")) { 
 		$error = ''; $success = '';
@@ -129,7 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Submit'])) {
         <div class="text-block-2">Come one, come all.</div>
         <div class="div-block-3"></div>
         <div class="form-block w-form">
-          <form id="wf-form-Registration-Form" name="wf-form-Registration-Form" data-name="Registration Form"  method="post" class="form registration-form">
+          <form id="wf-form-Registration-Form" name="wf-form-Registration-Form" data-name="Registration Form"  method="post" action="register_account.php" class="form registration-form">
             <div class="w-layout-grid grid">
               <div class="registration-divider"><label for="name" class="field-label">First Name</label><input type="text" class="login-field w-input" maxlength="256" name="F_Name" data-name="F_Name" placeholder="e.g. John" id="name" required=""></div>
               <div class="registration-divider"><label for="email-4" class="field-label">Last Name</label><input type="text" class="login-field w-input" maxlength="256" name="L_Name" data-name="L_Name" placeholder="e.g. Doe" id="email-4" required=""></div>

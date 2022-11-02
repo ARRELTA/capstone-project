@@ -77,10 +77,10 @@
         <div class="text-block-2">Login to get started.</div>
         <div class="div-block-3"></div>
         <div class="form-block w-form">
-          <form id="wf-form-Login-Form" name="wf-form-Login-Form" data-name="Login Form" method="post" class="form">
+          <form id="wf-form-Login-Form" name="wf-form-Login-Form" data-name="Login Form" method="post" action="login_account.php" class="form">
             <div class="w-layout-grid grid-2">
-              <div class="registration-divider"><label for="name" class="field-label-2">Username or Email</label><input type="text" class="login-field w-input" maxlength="256" name="name" data-name="Name" placeholder="" id="name" required=""></div>
-              <div class="registration-divider"><label for="email" class="field-label-2">Password</label><input type="email" class="login-field w-input" maxlength="256" name="email" data-name="Email" placeholder="" id="email" required=""></div>
+              <div class="registration-divider"><label for="username" class="field-label-2">Username or Email</label><input type="text" class="login-field w-input" maxlength="256" name="Username" data-name="Username" placeholder="" id="username" required=""></div>
+              <div class="registration-divider"><label for="password" class="field-label-2">Password</label><input type="password" class="login-field w-input" maxlength="256" name="Password" data-name="Password" placeholder="" id="pwd" required=""></div>
             </div>
             <div class="div-block-3"></div><input type="submit" data-wait="Wait..." value="Submit" class="button-primary form-button w-button">
             <div class="div-block-3"></div>
