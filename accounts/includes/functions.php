@@ -63,7 +63,7 @@ function pwdConfirm($PWD, $cPWD) {
 }
 
 // Check for existing username and email (users table)
-function uidExists($conn, $displayname) {
+function uidExists($conn, $userInput) {
 	$sql = "SELECT * FROM users WHERE displayname = ? OR Email = ?;";
 		$stmt = mysqli_stmt_init($conn); 
 		if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -71,7 +71,7 @@ function uidExists($conn, $displayname) {
 		exit();
 	}
 	
-	mysqli_stmt_bind_param($stmt, "ss", $displayname, $displayname);
+	mysqli_stmt_bind_param($stmt, "ss", $userInput, $userInput);
 	mysqli_stmt_execute($stmt);
 
 // "Get result" returns the results from a prepared statement
@@ -87,24 +87,34 @@ function uidExists($conn, $displayname) {
 
 	mysqli_stmt_close($stmt);
 }
+
+// Insert user into users & credentials tables
+function addUser($conn, $F_Name, $L_Name, $Email, $displayname, $PWD) {
+	//PWD hash for credentials
+	$sodium = getSalt();
+	$hashedPWD = encrypt($PWD,$sodium);
 	
-
-// Insert user into users DB
-function registerUser($conn, $F_Name, $L_Name, $Email, $displayname, $PWD) {
-  $sql = "INSERT INTO users (F_Name, L_Name, Email, displayname, PWD) VALUES (?, ?, ?, ?, ?);";
-
+	$sql = "INSERT INTO users (F_Name, L_Name, Email, displayname) VALUES (?, ?, ?, ?);";
+	$sql2 = "INSERT INTO credentials (UN, PWD, NaCl) VALUES (?, ?, ?);";
+	
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
 	 	header("location: ../register.php?error=stmtfailed");
 		exit();
 	}
+	$stmt2 = mysqli_stmt_init($conn);
+	if (!mysqli_stmt_prepare($stmt2, $sql2)) {
+	 	header("location: ../register.php?error=stmt2failed");
+		exit();
+	}
 
-//PWD hash for users table (temp method in place of salt/python hashing)
-	$hashedPwd = password_hash($PWD, PASSWORD_DEFAULT);
-
-	mysqli_stmt_bind_param($stmt, "sssss", $F_Name, $L_Name, $Email, $displayname, $hashedPwd);
+	mysqli_stmt_bind_param($stmt, "ssss", $F_Name, $L_Name, $Email, $displayname);
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
+	
+	mysqli_stmt_bind_param($stmt2, "sss", $displayname, $hashedPWD, $sodium);
+	mysqli_stmt_execute($stmt2);
+	mysqli_stmt_close($stmt2);
 	mysqli_close($conn);
 	header("location: ../register.php?error=none");
 	exit();
@@ -122,6 +132,28 @@ function emptyInputLogin($displayname, $PWD) {
 	return $result;
 }
 
+//Create salt for hashing purposes
+function getSalt() {
+	$bytes = random_bytes(36);
+	return bin2hex($bytes);
+}
+
+//Pass data to primary encryption script, get result
+function encrypt($PWD, $SALT) {
+	$output = '';
+	if ($PWD != "") {
+		$command = escapeshellcmd("python ../../py/pri.py ${PWD} ${SALT}");
+		$output = shell_exec($command);
+	}
+	return $output;
+}
+
+
+function verify($pwd1, $s, $pwd2) {
+	$t = encrypt($pwd1,$s);
+	return ($t == $pwd2);
+}
+
 // Log in
 function loginUser($conn, $displayname, $PWD) {
 	$uidExists = uidExists($conn, $displayname);
@@ -132,7 +164,8 @@ function loginUser($conn, $displayname, $PWD) {
 	}
 
 	$pwdHashed = $uidExists["PWD"];
-	$checkPwd = password_verify($PWD, $pwdHashed);
+	$chlor = $uidExists["NaCl"];
+	$checkPwd = verify($PWD, $chlor, $pwdHashed);
 
 	if ($checkPwd === false) {
 		header("location: ../login.php?error=wronglogin");
@@ -142,7 +175,7 @@ function loginUser($conn, $displayname, $PWD) {
 		session_start();
 		$_SESSION["userid"] = $uidExists["UID"];
 		$_SESSION["useruid"] = $uidExists["displayname"];
-		header("location: ../index.php?error=none");
+		header("location: ../../");
 		exit();
 	}
 }

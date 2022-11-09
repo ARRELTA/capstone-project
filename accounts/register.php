@@ -1,55 +1,3 @@
-<?php
-require_once "connect.php";
-require_once "session.php";
-
-function sanitize($data) {
-	$data = trim($data);
-	$data = stripslashes($data);
-	$data = htmlspecialchars($data);
-	return $data;
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Submit'])) {
-	$F_Name = sanitize($_POST['F_Name']) ?? "";
-	$L_Name = sanitize($_POST['L_Name']) ?? "";
-	$Email = sanitize($_POST['Email']) ?? "";
-	$PWD = sanitize($_POST['PWD']) ?? "";
-	$CPWD = sanitize($_POST['cPWD']) ?? "";
-	$displayname = sanitize($_POST['displayname']) ?? "";
-	
-	if($query = $conn->prepare("SELECT * FROM users WHERE displayname = ?")) { 
-		$error = ''; $success = '';
-		$query->bind_param('s', $displayname);
-		$query->execute();
-		//Store result for check
-		$query->store_result();
-		if ($query->num_rows > 0) { $error .= '<p class="error-message-text">That username is already taken.</p>';} else {
-			//Validation
-			if (strlen($PWD) < 8) { $error .= '<p class="error-message-text">Passwords must contain at least 8 characters.</p>';}
-			if (empty($CPWD)) { $error .= '<p class="error-message-text">Please enter confirm password.</p>';}
-			else {
-				if (empty($error) && ($PWD != $CPWD)) { $error .= '<p class="error-message-text">Passwords do not match.</p>';}
-			}
-			if (empty($error)) {
-				$insertQuery1 = $conn->prepare("insert into users(F_Name, L_Name, Email, displayname) values(?, ?, ?, ?)");
-				$insertQuery1->bind_param("ssss",$F_Name,$L_Name,$Email,$displayname);
-				$result1 = $insertQuery1->execute();
-				if ($result1) { $error .= '<p class="success-message-text">You should be logged in right about now...<br><br>If that isn&#x27;t the case, <a href="#">click here</a>.</p>';} 
-				else { $error .= '<p class="error-message-text">Make sure you are entering your information correctly.</p>';}
-				/*
-				$insertQuery2 = $conn->prepare("insert into credentials(displayname, hashPWD, salt) values(?, ?, ?)");	TODO
-				$insertQuery2->bind_param("ssb",$displayname, $HASH, $SALT);
-				$result2 = $insertQuery2->execute();
-				*/
-			}	
-		}
-	}
-	$query->close();
-	$insertQuery->close();
-	mysqli_close($conn);
-}
-?>
-
 <!DOCTYPE html><!--  This site was created in Webflow. https://www.webflow.com  -->
 <!--  Last Published: Mon Oct 31 2022 16:23:10 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="63423afc6a3b910e926d57ab" data-wf-site="6341b48ee2412d37b9bc61cf">
@@ -106,11 +54,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Submit'])) {
             </ul>
             <ul role="list" class="nav-menu-block w-list-unstyled">
               <li class="nav-menu-item">
-                <a href="../accounts/login.html" class="nav-link-accent non-indicator-link">Log In</a>
+                <a href="login.php" class="nav-link-accent non-indicator-link">Log In</a>
                 <link rel="prerender" href="/accounts/login">
               </li>
               <li class="mobile-margin-top-10">
-                <a href="../accounts/register.html" aria-current="page" class="button-primary w-button w--current">CREATE ACCOUNT</a>
+                <a href="./accounts/register.html" aria-current="page" class="button-primary w-button w--current">CREATE ACCOUNT</a>
                 <link rel="prerender" href="/accounts/register">
               </li>
             </ul>
@@ -129,28 +77,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Submit'])) {
         <div class="text-block-2">Come one, come all.</div>
         <div class="div-block-3"></div>
         <div class="form-block w-form">
-          <form id="wf-form-Registration-Form" name="wf-form-Registration-Form" data-name="Registration Form"  method="post" action="register_account.php" class="form registration-form">
+          <form id="wf-form-Registration-Form" name="wf-form-Registration-Form" data-name="Registration Form"  method="post" action="./includes/register_account.php" class="form registration-form">
             <div class="w-layout-grid grid">
               <div class="registration-divider"><label for="name" class="field-label">First Name</label><input type="text" class="login-field w-input" maxlength="256" name="F_Name" data-name="F_Name" placeholder="e.g. John" id="name" required=""></div>
               <div class="registration-divider"><label for="email-4" class="field-label">Last Name</label><input type="text" class="login-field w-input" maxlength="256" name="L_Name" data-name="L_Name" placeholder="e.g. Doe" id="email-4" required=""></div>
               <div class="registration-divider"><label for="Email-5" class="field-label-2">Email Address</label><input type="email" class="login-field w-input" maxlength="256" name="Email" data-name="Email" placeholder="e.x. user@domain.com" id="Email-5" required=""></div>
               <div class="registration-divider"><label for="email-4" class="field-label">Username</label><input type="text" class="login-field w-input" maxlength="256" name="displayname" data-name="displayname" placeholder="e.g. JDoe11" id="email-4" required=""></div>
               <div class="registration-divider"><label for="Password" class="field-label">Password</label><input type="password" class="login-field w-input" maxlength="256" name="PWD" data-name="PWD" placeholder="" id="Password" required=""></div>
-              <div class="registration-divider"><label for="Confirm-Password" class="field-label">Confirm Password</label><input type="password" class="login-field password-field w-input" maxlength="256" name="PWD" data-name="cPWD" placeholder="" id="Confirm-Password" required=""></div>
+              <div class="registration-divider"><label for="Confirm-Password" class="field-label">Confirm Password</label><input type="password" class="login-field password-field w-input" maxlength="256" name="cPWD" data-name="cPWD" placeholder="" id="Confirm-Password" required=""></div>
             </div>
-            <div class="w-form-formrecaptcha recaptcha g-recaptcha g-recaptcha-error g-recaptcha-disabled g-recaptcha-invalid-key"></div>
-            <div class="div-block-3"></div><input type="submit" data-wait="Wait..." value="Submit" class="button-primary form-button w-button">
+            <div class="div-block-3"></div><button type="submit" name="submit" value="Submit" class="button-primary form-button w-button">
           </form>
-          <div class="success-message w-form-done">
-            <div><?php if (isset($success)) { echo $success; } ?></div>
-          </div>
-          <div class="error-message w-form-fail">
-			<div class="error-title">Something went wrong...</div>
-				<div class="error-message">
-				<?php if (isset($error)) { echo $error; } ?>
-				</div>
-          </div>
+		  <p>Submit</p>
         </div>
+		<?php
+    // Error messages
+    if (isset($_GET["error"])) {
+      if ($_GET["error"] == "emptyinput") {
+        echo "<p>Fill in all fields!</p>";
+      }
+      else if ($_GET["error"] == "invalidUname") {
+        echo "<p>Choose a proper username!</p>";
+      }
+      else if ($_GET["error"] == "invalidemail") {
+        echo "<p>Choose a proper email!</p>";
+      }
+	  else if ($_GET["error"] == "passwordTooshort") {
+        echo "<p>Password must be at least 8 chars!</p>";
+      }
+      else if ($_GET["error"] == "passwordMismatch") {
+        echo "<p>Passwords don't match!</p>";
+      }
+      else if ($_GET["error"] == "stmtfailed") {
+        echo "<p>Something went wrong!</p>";
+      }
+      else if ($_GET["error"] == "usernametaken") {
+        echo "<p>Username already taken!</p>";
+      }
+      else if ($_GET["error"] == "none") {
+        echo "<p>You have signed up!</p>";
+      }
+    }
+  ?>
       </div>
     </div>
   </div>

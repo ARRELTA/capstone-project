@@ -5,8 +5,8 @@ if (isset($_POST["submit"])) {
 	$displayname = $_POST["displayname"];
 	$PWD = $_POST["PWD"];
 	
-	require_once "connect.php";
-	require_once "functions.php";
+	require_once './connect.php';
+	require_once './functions.php';
 	
 	
 	if (emptyInputLogin($displayname, $PWD) === true) {
@@ -14,7 +14,7 @@ if (isset($_POST["submit"])) {
 			exit();
 	}
 
-loginUser($conn, $displayname, $PWD);
+	loginUser($conn, $displayname, $PWD);
 
 } else {
 	header("location: ../login.php");

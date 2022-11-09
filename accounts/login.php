@@ -54,11 +54,11 @@
             </ul>
             <ul role="list" class="nav-menu-block w-list-unstyled">
               <li class="nav-menu-item">
-                <a href="../accounts/login.html" aria-current="page" class="nav-link-accent non-indicator-link w--current">Log In</a>
+                <a href="../accounts/login.php" aria-current="page" class="nav-link-accent non-indicator-link w--current">Log In</a>
                 <link rel="prerender" href="/accounts/login">
               </li>
               <li class="mobile-margin-top-10">
-                <a href="../accounts/register.html" class="button-primary w-button">CREATE ACCOUNT</a>
+                <a href="../accounts/register.php" class="button-primary w-button">CREATE ACCOUNT</a>
                 <link rel="prerender" href="/accounts/register">
               </li>
             </ul>
@@ -77,22 +77,27 @@
         <div class="text-block-2">Login to get started.</div>
         <div class="div-block-3"></div>
         <div class="form-block w-form">
-          <form id="wf-form-Login-Form" name="wf-form-Login-Form" data-name="Login Form" method="post" action="login_account.php" class="form">
+          <form id="wf-form-Login-Form" name="wf-form-Login-Form" data-name="Login Form" method="post" action="./includes/login_account.php" class="form">
             <div class="w-layout-grid grid-2">
-              <div class="registration-divider"><label for="username" class="field-label-2">Username or Email</label><input type="text" class="login-field w-input" maxlength="256" name="Username" data-name="Username" placeholder="" id="username" required=""></div>
-              <div class="registration-divider"><label for="password" class="field-label-2">Password</label><input type="password" class="login-field w-input" maxlength="256" name="Password" data-name="Password" placeholder="" id="pwd" required=""></div>
+              <div class="registration-divider"><label for="username" class="field-label-2">Username or Email</label><input type="text" class="login-field w-input" maxlength="256" name="displayname" data-name="Username" placeholder="" id="username" required=""></div>
+              <div class="registration-divider"><label for="password" class="field-label-2">Password</label><input type="password" class="login-field w-input" maxlength="256" name="PWD" data-name="Password" placeholder="" id="pwd" required=""></div>
             </div>
-            <div class="div-block-3"></div><input type="submit" data-wait="Wait..." value="Submit" class="button-primary form-button w-button">
+            <div class="div-block-3"></div><button type="submit" name="submit" value="Submit" class="button-primary form-button w-button">
             <div class="div-block-3"></div>
           </form>
-          <div class="success-message w-form-done">
-            <div>You should be logged in right about now...<br><br>If that isn&#x27;t the case, <a href="#">click here</a>.</div>
-          </div>
-          <div class="error-message w-form-fail">
-            <div class="error-title">Something went wrong...</div>
-            <div class="error-message">Make sure you&#x27;re entering your credentials in correctly prior to submission.</div>
-          </div>
+		  <p>Submit</p>
         </div>
+		<?php
+    // Error messages
+    if (isset($_GET["error"])) {
+      if ($_GET["error"] == "emptyinput") {
+        echo "<p>Fill in all fields!</p>";
+      }
+      else if ($_GET["error"] == "wronglogin") {
+        echo "<p>Wrong login!</p>";
+      }
+    }
+		?>
         <div class="div-block-5">
           <div>Password not working? Click <a href="../accounts/password-reset.html">here</a>
             <link rel="prefetch" href="/accounts/password-reset">.

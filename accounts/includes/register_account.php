@@ -8,8 +8,8 @@
 		$cPWD = $_POST['cPWD'];
 		$displayname = $_POST['displayname'];
 		
-		require_once 'connect.php';
-		require_once 'functions.php';
+		require_once './connect.php';
+		require_once './functions.php';
 		
 //Error messages
 
@@ -44,8 +44,8 @@
 			exit();
 		}
 
-//Registration 
-		registerUser($conn, $F_Name, $L_Name, $Email, $displayname, $PWD);
+		//Registration
+		addUser($conn, $F_Name, $L_Name, $Email, $displayname, $PWD);
 	}	else {
 		header("location: ../register.php");
 		exit();
