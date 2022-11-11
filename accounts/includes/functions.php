@@ -1,5 +1,7 @@
 <?php
 
+require_once 'encryptor.php';
+
 //Error & validation functions
 
 // Check empty input
@@ -173,8 +175,8 @@ function loginUser($conn, $displayname, $PWD) {
 	}
 	elseif ($checkPwd === true) {
 		session_start();
-		$_SESSION["userid"] = $uidExists["UID"];
-		$_SESSION["useruid"] = $uidExists["displayname"];
+		$_SESSION["userUID"] = $uidExists["UID"];
+		$_SESSION["userName"] = $uidExists["displayname"];
 		header("location: ../../");
 		exit();
 	}
