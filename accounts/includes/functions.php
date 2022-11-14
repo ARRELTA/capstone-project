@@ -1,7 +1,5 @@
 <?php
 
-require_once 'encryptor.php';
-
 //Error & validation functions
 
 // Check empty input
@@ -118,7 +116,7 @@ function addUser($conn, $F_Name, $L_Name, $Email, $displayname, $PWD) {
 	mysqli_stmt_execute($stmt2);
 	mysqli_stmt_close($stmt2);
 	mysqli_close($conn);
-	header("location: ../register.php?error=none");
+	header("location: ../login.php");
 	exit();
 }
 
@@ -145,7 +143,7 @@ function encrypt($PWD, $SALT) {
 	$output = '';
 	if ($PWD != "") {
 		$command = escapeshellcmd("python ../../py/pri.py ${PWD} ${SALT}");
-		$output = shell_exec($command);
+		$output = exec($command);
 	}
 	return $output;
 }

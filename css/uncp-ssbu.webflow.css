@@ -167,6 +167,7 @@ a:visited {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  z-index: 50;
 }
 
 .navbar-brand-three {
@@ -265,6 +266,10 @@ a:visited {
   outline-style: solid;
   outline-width: 2px;
   color: #0050bd;
+}
+
+.nav-link.non-indicator-link:visited:hover {
+  color: #71e34b;
 }
 
 .nav-link.non-indicator-link:hover {
@@ -423,6 +428,10 @@ a:visited {
   color: #fff;
 }
 
+.nav-link-accent.non-indicator-link:visited:hover {
+  color: #71e34b;
+}
+
 .button-primary {
   padding: 12px 25px;
   border-top-left-radius: 25px;
@@ -453,6 +462,11 @@ a:visited {
 .button-primary:visited {
   background-color: #fff;
   color: #000;
+}
+
+.button-primary:visited:hover {
+  background-color: #e24309;
+  color: #fff;
 }
 
 .button-primary.form-button {
@@ -726,6 +740,14 @@ a:visited {
 .heading-3 {
   font-size: 45px;
   mix-blend-mode: normal;
+}
+
+.heading-3.tourney-heading {
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  -ms-grid-row-align: center;
+  align-self: center;
+  color: #fff;
 }
 
 .centered-heading {
@@ -1071,6 +1093,39 @@ a:visited {
   -webkit-text-fill-color: inherit;
   -o-object-fit: fill;
   object-fit: fill;
+}
+
+.div-block.tourney-panel {
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  right: 0%;
+  bottom: 0%;
+  z-index: 900;
+  display: none;
+  overflow: auto;
+  height: auto;
+  max-height: 100%;
+  min-height: 25%;
+  min-width: 100%;
+  margin-right: auto;
+  padding-top: 0%;
+  padding-bottom: 0%;
+  clear: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-bottom: 0px none #000;
+  border-radius: 0px;
+  background-color: rgba(0, 0, 0, 0.55);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .div-block-2.reset-div {
@@ -1460,6 +1515,75 @@ a:visited {
   margin-bottom: auto;
 }
 
+.tourney-button {
+  width: auto;
+  max-height: 250px;
+  max-width: 150px;
+  min-height: 250px;
+  min-width: 150px;
+  border-radius: 15px;
+  background-color: #e24309;
+  font-style: normal;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.tourney-button:visited {
+  width: auto;
+  max-height: 250px;
+  max-width: 150px;
+  min-height: 250px;
+  min-width: 150px;
+  border-radius: 15px;
+  background-color: #e24309;
+  font-style: normal;
+  font-weight: 500;
+  text-decoration: none;
+  color: #fff;
+}
+
+.div-block.tourney-panel {
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  right: 0%;
+  bottom: 0%;
+  z-index: 900;
+  display: none;
+  overflow: auto;
+  height: auto;
+  max-height: 100%;
+  min-height: 25%;
+  min-width: 100%;
+  margin-right: auto;
+  padding-top: 0%;
+  padding-bottom: 0%;
+  clear: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-bottom: 0px none #000;
+  border-radius: 0px;
+  background-color: rgba(0, 0, 0, 0.55);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.div-block-12 {
+  max-height: 45%;
+  max-width: 100%;
+  min-height: 45%;
+  min-width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 .div-block-4 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1495,6 +1619,36 @@ a:visited {
   -ms-grid-rows: auto auto;
   grid-template-rows: auto auto;
   text-align: center;
+}
+
+.container-6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding-top: 1.5%;
+  padding-bottom: 1.5%;
+  max-width: 100%;
+  min-height: auto;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  align-self: center;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  grid-column-gap: 4%;
 }
 
 .div-block-4.description-block {
