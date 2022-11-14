@@ -142,7 +142,7 @@ function getSalt() {
 function encrypt($PWD, $SALT) {
 	$output = '';
 	if ($PWD != "") {
-		$command = escapeshellcmd("python /py/pri.py ${PWD} ${SALT}");
+		$command = escapeshellcmd("python ../../py/pri.py ${PWD} ${SALT}");
 		$output = exec($command);
 	}
 	return $output;
