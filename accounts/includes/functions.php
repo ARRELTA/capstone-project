@@ -65,27 +65,7 @@ function pwdConfirm($PWD, $cPWD) {
 // Check for existing username and email (users table)
 function uidExists($conn, $userInput) {
 	$sql = "SELECT * FROM users WHERE displayname = ? OR Email = ?;";
-		$stmt = mysqli_stmt_init($conn); 
-		if (!mysqli_stmt_prepare($stmt, $sql)) {
-	 	header("location: ../register.php?error=stmtfailed");
-		exit();
-	}
-	
-	mysqli_stmt_bind_param($stmt, "ss", $userInput, $userInput);
-	mysqli_stmt_execute($stmt);
-
-// "Get result" returns the results from a prepared statement
-	$resultData = mysqli_stmt_get_result($stmt);
-
-	if ($row = mysqli_fetch_assoc($resultData)) {
-		return $row;
-	}
-	else {
-		$result = false;
-		return $result;
-	}
-
-	mysqli_stmt_close($stmt);
+	return runQuery($conn, $sql, 1, $userInput, $userInput);
 }
 
 // Insert user into users & credentials tables
@@ -94,30 +74,55 @@ function addUser($conn, $F_Name, $L_Name, $Email, $displayname, $PWD) {
 	$sodium = getSalt();
 	$hashedPWD = encrypt($PWD,$sodium);
 	
-	$sql = "INSERT INTO users (F_Name, L_Name, Email, displayname) VALUES (?, ?, ?, ?);";
-	$sql2 = "INSERT INTO credentials (UN, PWD, NaCl) VALUES (?, ?, ?);";
+	$query1 = "INSERT INTO users (F_Name, L_Name, Email, displayname) VALUES (?, ?, ?, ?);";
+	$query2 = "INSERT INTO credentials (UN, PWD, NaCl) VALUES (?, ?, ?);";
 	
-	$stmt = mysqli_stmt_init($conn);
-	if (!mysqli_stmt_prepare($stmt, $sql)) {
-	 	header("location: ../register.php?error=stmtfailed");
-		exit();
-	}
-	$stmt2 = mysqli_stmt_init($conn);
-	if (!mysqli_stmt_prepare($stmt2, $sql2)) {
-	 	header("location: ../register.php?error=stmt2failed");
-		exit();
-	}
-
-	mysqli_stmt_bind_param($stmt, "ssss", $F_Name, $L_Name, $Email, $displayname);
-	mysqli_stmt_execute($stmt);
-	mysqli_stmt_close($stmt);
-	
-	mysqli_stmt_bind_param($stmt2, "sss", $displayname, $hashedPWD, $sodium);
-	mysqli_stmt_execute($stmt2);
-	mysqli_stmt_close($stmt2);
-	mysqli_close($conn);
+	runQuery($conn, $query1, 2, $F_Name, $L_Name, $Email, $displayname);
+	runQuery($conn, $query2, 2, $displayname, $hashedPWD, $sodium);
 	header("location: ../login.php");
 	exit();
+}
+
+//Run SQL Query
+function runQuery($connector, $query, $resultType, ...$params) {
+	foreach ($params as $p) {
+		$p = mysqli_real_escape_string($connector,$p);
+	}
+	$stmt = mysqli_stmt_init($connector);
+	if (!mysqli_stmt_prepare($stmt, $query)) {
+	 	header("location: ./__FILE__?error=stmtfailed");
+		exit();
+	}
+	$parTypes = "";		//Parameter type binding initialization
+	foreach ($params as $p) {
+		switch (gettype($p)) {
+			case "string":
+				$parTypes .= "s"; break;
+			case "integer":
+				$parTypes .= "i"; break;
+			case "double":
+				$parTypes .= "d"; break;
+			default:
+				$parTypes .= "!"; break;
+		}
+	}
+	mysqli_stmt_bind_param($stmt, $parTypes, ...$params);
+	mysqli_stmt_execute($stmt);
+	
+	$resultData = mysqli_stmt_get_result($stmt);
+	switch ($resultType) {
+		case 0:		//Fetching multiple rows
+			$rows = mysqli_fetch_all($resultData, MYSQLI_ASSOC); break;
+		case 1:		//Fetching a single row
+			$rows = mysqli_fetch_assoc($resultData); break;
+		case 2: 	//No row is fetched (INSERT statements)
+			$rows = true; break;
+		default:
+			$rows = false; break;
+	}
+	if ($rows) { return $rows; }
+	else { $result = false;	return $result;}
+	mysqli_stmt_close($stmt);
 }
 
 // Check for empty input login
@@ -148,9 +153,8 @@ function encrypt($PWD, $SALT) {
 	return $output;
 }
 
-
 function verify($pwd1, $s, $pwd2) {
-	$t = encrypt($pwd1,$s);
+	$t = encrypt($pwd1, $s);
 	return ($t == $pwd2);
 }
 
@@ -158,24 +162,23 @@ function verify($pwd1, $s, $pwd2) {
 function loginUser($conn, $displayname, $PWD) {
 	$uidExists = uidExists($conn, $displayname);
 
-	if ($uidExists === false) {
-		header("location: ../login.php?error=wronglogin");
-		exit();
-	}
-
-	$pwdHashed = $uidExists["PWD"];
-	$chlor = $uidExists["NaCl"];
+	if ($uidExists === false) {	header("location: ../login.php?error=wronglogin");	exit();	}
+	$query = 'SELECT * FROM credentials WHERE UN = ?;';
+	$cred = runQuery($conn, $query, 1, $displayname);
+	$pwdHashed = $cred["PWD"];
+	$chlor = $cred["NaCl"];
 	$checkPwd = verify($PWD, $chlor, $pwdHashed);
 
-	if ($checkPwd === false) {
-		header("location: ../login.php?error=wronglogin");
-		exit();
-	}
-	elseif ($checkPwd === true) {
+	if ($checkPwd) {
 		session_start();
 		$_SESSION["userUID"] = $uidExists["UID"];
 		$_SESSION["userName"] = $uidExists["displayname"];
-		header("location: ../../");
+		header("location: ../../index.php");
+		exit();
+		
+	}
+	else {
+		header("location: ../login.php?error=wronglogin");
 		exit();
 	}
 }
