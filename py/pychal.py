@@ -32,5 +32,19 @@ rounds = sys.argv[19]               # Swiss Only
 def setCredentials():
     challonge.set_credentials("UNCP_Admin", apikey)
     
+def createTournament():
+    params = {
+        "signup_cap" : entrants
+    }
+    match style:
+        case 0:
+            challonge.tournaments.create(title, url, "single elimination", params)
+        case 1:
+            pass
+        case 2:
+            pass
+        case 3:
+            pass
 
+    challonge.tournaments.create()
 

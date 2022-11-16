@@ -10,8 +10,6 @@
   <link href="css/webflow.css" rel="stylesheet" type="text/css">
   <link href="css/uncp-ssbu.webflow.css" rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
-  <!-- Navbar scripting-->
-  <script src="js/modular_navbar.js" type="text/javascript" defer></script>
   <script type="text/javascript">WebFont.load({  google: {    families: ["Exo:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic"]  }});</script>
   <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
   <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
@@ -20,7 +18,7 @@
 </head>
 <body class="body-a">
   <div id="BG" class="bg"></div>
-	<navbar-modular></navbar-modular>
+  <?php require_once './accounts/includes/navbar.php'; ?>
   <div class="div-block home-panel" id="homepanel">
     <div class="div-block-9"></div>
     <div class="w-layout-grid home-grid">
@@ -128,9 +126,13 @@
         <a id="ongoing-tourneys" href="./tournaments/view-tournaments.php" class="tourney-button w-button">ONGOING</a>
         <a id="upcoming-tourneys" href="./tournaments/view-tournaments.php" class="tourney-button w-button">UPCOMING</a>
         <a id="winners-circle" href="#" class="tourney-button w-button">WINNER&#x27;S<br>CIRCLE</a>
-        <a href="./tournaments/new-tournament.php" class="tourney-button w-button">CREATE<br>TOURNAMENT</a>
-        <a href="./tournaments/edit-tournament.php" class="tourney-button w-button">EDIT<br>TOURNAMENT</a>
-        <a href="./tournaments/delete-tournament.php" class="tourney-button w-button">DELETE<br>TOURNAMENT</a>
+		<?php
+			if (isset($_SESSION["userName"])) {
+				echo "<a href='./tournaments/new-tournament.php' class='tourney-button w-button'>CREATE<br>TOURNAMENT</a>";
+				echo "<a href='./tournaments/edit-tournament.php' class='tourney-button w-button'>EDIT<br>TOURNAMENT</a>";
+				echo "<a href='./tournaments/delete-tournament.php' class='tourney-button w-button'>DELETE<br>TOURNAMENT</a>";
+			}
+        ?>
       </div>
 	  <p class="margin-bottom-24px-2" onclick="hidePopup()">Back To Home</p>
     </div>
