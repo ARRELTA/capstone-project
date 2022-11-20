@@ -1,0 +1,2 @@
+ErrorDocument 500 http://localhost/home/500.php
+ErrorDocument 404 http://localhost/home/404.html
