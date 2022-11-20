@@ -11,8 +11,6 @@
   <link href="css/normalize.css" rel="stylesheet" type="text/css">
   <link href="css/webflow.css" rel="stylesheet" type="text/css">
   <link href="css/uncp-ssbu.webflow.css" rel="stylesheet" type="text/css">
-  <!-- Navbar scripting-->
-  <script src="js/modular_navbar.js" type="text/javascript" defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
   <script type="text/javascript">WebFont.load({  google: {    families: ["Exo:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic"]  }});</script>
   <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
@@ -22,7 +20,7 @@
 </head>
 <body class="body-a">
   <div id="BG" class="bg"></div>
- <navbar-modular></navbar-modular>
+ <?php include_once './accounts/includes/navbar.php'; ?>
   <div class="container-5 w-container">
     <div class="div-block about-blurb">
       <section class="testimonial-image-left wf-section">

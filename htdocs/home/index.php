@@ -123,8 +123,7 @@
         <h1 class="heading-3 tourney-heading">-Tournaments Menu-</h1>
       </div>
       <div class="container-6 w-container">
-        <a id="ongoing-tourneys" href="./tournaments/view-tournaments.php" class="tourney-button w-button">ONGOING</a>
-        <a id="upcoming-tourneys" href="./tournaments/view-tournaments.php" class="tourney-button w-button">UPCOMING</a>
+        <a id="ongoing-tourneys" href="./tournaments/view-tournaments.php" class="tourney-button w-button">VIEW<br>TOURNAMENTS</a>
         <a id="winners-circle" href="#" class="tourney-button w-button">WINNER&#x27;S<br>CIRCLE</a>
 		<?php
 			if (isset($_SESSION["userName"])) {

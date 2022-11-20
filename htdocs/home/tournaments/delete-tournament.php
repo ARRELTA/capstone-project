@@ -27,12 +27,12 @@
         <h1 class="login-header">-Delete Tournament-</h1>
         <div class="text-block-2">You had one job.</div>
         <div class="form-block w-form">
-          <form id="wf-form-Tourn-Create-Form" name="wf-form-Tourney-Creation-Form" data-name="Tourney Creation Form" method="post" class="form registration-form">
+          <form id="wf-form-Tourn-Create-Form" name="wf-form-Tourney-Creation-Form" data-name="Tourney Creation Form" method="post" action="../accounts/includes/tour_functions.php" class="form registration-form">
             <div class="w-layout-grid grid-2">
-              <div id="w-node-_1dca2ac7-6807-972d-3018-e495fe6e088a-656efbde" class="registration-divider tournament-divider"><label for="Tournament-ID" class="field-label">Tournament ID</label><input type="number" class="login-field id-field w-input" maxlength="256" name="Entrant-Limit" data-name="Entrant-Limit" placeholder="" id="Tournament-ID" required=""></div>
-              <div id="w-node-ea276d77-aba3-1c4e-0a8f-5c2e7a863d71-656efbde" class="registration-divider tournament-divider"><label for="Tournament-ID-Confirm" class="field-label">Confirm Tournament ID</label><input type="number" class="login-field id-field w-input" maxlength="256" name="Entrant-Limit" data-name="Entrant-Limit" placeholder="" id="Tournament-ID-Confirm" required=""></div>
+              <div id="w-node-_1dca2ac7-6807-972d-3018-e495fe6e088a-656efbde" class="registration-divider tournament-divider"><label for="Tournament-ID" class="field-label">Tournament ID</label><input type="text" class="login-field id-field w-input" maxlength="256" name="Tourney-URL" data-name="Tourney-URL" placeholder="" id="Tournament-ID" required=""></div>
+              <div id="w-node-ea276d77-aba3-1c4e-0a8f-5c2e7a863d71-656efbde" class="registration-divider tournament-divider"><label for="Tournament-ID-Confirm" class="field-label">Confirm Tournament ID</label><input type="text" class="login-field id-field w-input" maxlength="256" name="URL-Confirm" data-name="URL-Confirm" placeholder="" id="Tournament-ID-Confirm" required=""></div>
             </div>
-            <div class="w-form-formrecaptcha recaptcha g-recaptcha g-recaptcha-error g-recaptcha-disabled g-recaptcha-invalid-key"></div><input type="submit" data-wait="Wait..." value="Submit" class="button-primary form-button w-button">
+            <div class="w-form-formrecaptcha recaptcha g-recaptcha g-recaptcha-error g-recaptcha-disabled g-recaptcha-invalid-key"></div><input type="submit" data-wait="Wait..." name="DESTROY" value="Submit" class="button-primary form-button w-button">
           </form>
           <div class="success-message w-form-done">
             <div>The tournament should be gone...<br><br>Go check the relevant tournaments page to make sure.</div>

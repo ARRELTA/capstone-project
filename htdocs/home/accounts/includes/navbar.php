@@ -6,21 +6,20 @@
 <link href="/home/css/normalize.css" rel="stylesheet" type="text/css">
 	<link href="/home/css/webflow.css" rel="stylesheet" type="text/css">
 	<link href="/home/css/uncp-ssbu.webflow.css" rel="stylesheet" type="text/css">
-	<!--NAVBAR HTML STUFF GOES HERE-->
 	<div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-logo-center-container shadow-three w-nav">
 		<div class="container">
 			<div class="navbar-wrapper-three">
-				<a href="/home/index.php" aria-current="page" class="navbar-brand-three w-nav-brand w--current"><img src="/home/images/uncp-logo.svg" loading="lazy" id="UNCP-Logo" alt="" class="image"></a>
-				<link rel="prerender" href="/">
+				<a href="/index.php" aria-current="page" class="navbar-brand-three w-nav-brand w--current"><img src="/home/images/uncp-logo.svg" loading="lazy" id="UNCP-Logo" alt="" class="image"></a>
+				<link rel="prerender" href="/index.php">
 					<nav role="navigation" class="nav-menu-wrapper-three w-nav-menu">
 						<div class="nav-menu-three">
 							<ul role="list" class="nav-menu-block w-list-unstyled">
 								<li class="nav-menu-item">
-									<a href="/home/about-us.html" target="_blank" class="nav-link non-indicator-link">About</a>
+									<a href="/home/about-us.php" target="_blank" class="nav-link non-indicator-link">About</a>
 									<link rel="prefetch" href="/about-us">
 								</li>
 								<li class="nav-menu-item">
-									<a href="/home/contact-us.html" class="nav-link non-indicator-link">Contact</a>
+									<a href="/home/contact-us.php" class="nav-link non-indicator-link">Contact</a>
 								</li>
 							</ul>
 							<?php
@@ -31,7 +30,7 @@
 											  <link rel='prerender' href='/index'>";
 										echo "</li>
 											  <li class='mobile-margin-top-10'>
-											  <a href='accounts/register.php' class='button-primary w-button'>Profile</a>
+											  <a href='accounts/register.php' class='button-primary w-button'>PROFILE</a>
 											  <link rel='prerender' href='/accounts/register'>";
 								}
 									else {

@@ -1,7 +1,17 @@
 <?php
 
-//Error & validation functions
+//Data cleaners
 
+function mass_clean(...$vars) {
+	foreach ($vars as $v) {$v = data_clean($v);}
+}
+
+function data_clean(&$var) {
+	$var = filter_var($var, FILTER_SANITIZE_STRING); 
+	$var = htmlspecialchars($var);
+}
+
+//Error & validation functions
 // Check empty input
 function emptyInputSignup($F_Name, $L_Name, $Email, $PWD, $cPWD, $displayname) {
 	$result;
