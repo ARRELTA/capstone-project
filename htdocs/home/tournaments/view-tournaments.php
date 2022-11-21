@@ -21,6 +21,7 @@
 <body class="body-a">
   <div class="bg-tourney"></div>
   <?php include_once '../accounts/includes/navbar.php'; ?>
+  <?php require '../accounts/includes/getTourneyData.php'; ?>
   <div class="section-4 wf-section">
     <div class="div-block-2">
       <div class="div-block-11">
@@ -50,11 +51,7 @@
                   <div id="w-node-d449dc05-9191-7901-017a-d0f822135d68-c8b4b277">Link</div>
                 </div>
                 <div class="div-block-15">
-                  <div class="w-layout-grid grid-14">
-                    <div id="w-node-_23be281a-f926-aba6-c499-786e853565ce-c8b4b277" class="div-block-14">
-                      <div id="w-node-_275a242c-7a54-1c1f-aa02-eb2a8712f696-c8b4b277" class="text-block-8">Tournament ID</div>
-                    </div>
-                  </div>
+                  <?php printEntries(0); ?>
                 </div>
               </div>
               <div data-w-tab="Tab 2" class="tab-pane-tab-2 w-tab-pane">
@@ -66,6 +63,9 @@
                   <div id="w-node-_52ab7a58-ae2d-27c7-e440-2ef55366ef02-c8b4b277">Entrants</div>
                   <div id="w-node-_52ab7a58-ae2d-27c7-e440-2ef55366ef04-c8b4b277">Link</div>
                 </div>
+				<div class="div-block-15">
+                  <?php  printEntries(1); ?>
+                </div>
               </div>
               <div data-w-tab="Tab 3" class="tab-pane-tab-3 w-tab-pane">
                 <div class="w-layout-grid grid-10">
@@ -75,6 +75,9 @@
                   <div id="w-node-_2862b524-9a7f-d40f-41a8-0f879ff9a9aa-c8b4b277">Time</div>
                   <div id="w-node-_2862b524-9a7f-d40f-41a8-0f879ff9a9ac-c8b4b277">Entrants</div>
                   <div id="w-node-_2862b524-9a7f-d40f-41a8-0f879ff9a9ae-c8b4b277">Link</div>
+                </div>
+				<div class="div-block-15">
+                  <?php  printEntries(2); ?>
                 </div>
               </div>
             </div>

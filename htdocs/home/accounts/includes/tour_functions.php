@@ -45,6 +45,8 @@
 		$parameters["signup_cap"] = $entrants; $parameters["start_at"] = $year.'-'.$month.'-'.$day.'-T'.$hour.':'.$minute.':00-04:00';
 		$parameters["check_in_duration"] = $checkIn; $parameters["description"] = $desc;
 		if (isset($_POST["ALTER"])) {$parameters["TID"] = $tid;}
+		$parameters["game_name"] = "Super Smash Bros. Ultimate";
+		$parameters["open_signup"] = true;
 	
 		$optionals["hold_third_place_match"] = $thirdPlaceMatch; $optionals["grand_finals_modifier"] = $grandFinalsModifier;
 		$optionals["rr_pts_for_match_win"] = $ptsMatchWin; $optionals["rr_pts_for_match_tie"] = $ptsMatchTie; 
@@ -71,12 +73,5 @@
 			$command = escapeshellcmd("python ../../py/tourney_destroy.py ".$url);
 			exec($command);
 		}
-	}
-	elseif (isset($_POST["GET_SOON"])) {
-		
-	}
-	elseif (isset($_POST["GET_CURRENT"])) {
-		
-	}
-	
+	}	
 ?>

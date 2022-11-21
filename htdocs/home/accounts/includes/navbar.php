@@ -3,7 +3,7 @@
   include_once 'functions.php';
 ?>
 
-<link href="/home/css/normalize.css" rel="stylesheet" type="text/css">
+	<link href="/home/css/normalize.css" rel="stylesheet" type="text/css">
 	<link href="/home/css/webflow.css" rel="stylesheet" type="text/css">
 	<link href="/home/css/uncp-ssbu.webflow.css" rel="stylesheet" type="text/css">
 	<div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-logo-center-container shadow-three w-nav">
