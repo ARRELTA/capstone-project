@@ -15,7 +15,7 @@
 						<div class="nav-menu-three">
 							<ul role="list" class="nav-menu-block w-list-unstyled">
 								<li class="nav-menu-item">
-									<a href="/home/about-us.php" target="_blank" class="nav-link non-indicator-link">About</a>
+									<a href="/home/about-us.php" class="nav-link non-indicator-link">About</a>
 									<link rel="prefetch" href="/about-us">
 								</li>
 								<li class="nav-menu-item">
